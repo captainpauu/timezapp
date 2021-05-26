@@ -1,38 +1,89 @@
 .App {
+  padding: 30px 50px;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.App .ui.header.app-header {
+  padding: 0 0.5em;
+}
+
+.App .ui.header.app-header .content {
+  font-family: "Leckerli One", cursive;
+  font-size: 1.5em;
+  color: #1a2930;
+}
+
+.App .ui.header.app-header img {
+  width: 2em;
+}
+
+.App .display-time,
+.App .timezone-selector {
+  padding: 4em 2em !important;
+}
+
+.App .display-time .content {
   text-align: center;
+  color: #fff;
+  background-color: #5843be;
+  border-radius: 10px;
+  padding: 2em 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App .display-time .offset {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App .display-time .time {
+  margin-bottom: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.App .display-time .date {
+  opacity: 0.8;
+  margin-bottom: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.App .timezone-selector .content {
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+  padding: 2em 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.App .timezone-selector .ui.dropdown,
+.App .timezone-selector .ui.dropdown .text,
+.App .timezone-selector .ui.dropdown .menu .item {
+  color: #fff !important;
+  background-color: #fe7066 !important;
+  border: none !important;
+}
+
+.App .wikipedia-details {
+  margin: 1em;
+  background-color: #f9fafb;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.App .wikipedia-details .ui.header.wiki-details-header,
+.App .wikipedia-details .content {
+  width: 100%;
+  padding: 20px;
+  color: #1a2930;
+}
+
+.App .wikipedia-details .ui.header.wiki-details-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.App .wikipedia-details .ui.header.wiki-details-header .abbrevation-name {
+  display: inline-block;
+}
+
+@media only screen and (min-width: 768px) {
+  .App {
+    width: 800px !important;
   }
 }

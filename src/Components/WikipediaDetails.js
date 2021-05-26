@@ -4,9 +4,11 @@ import WikipediaAPI from "../api/WikipediaAPI";
 const WikipediaDetails = ({ timezone }) => {
   const [tzAbbr, setTzAbbr] = useState("");
   const [details, setDetails] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (tzAbbr) {
+      setLoading(true);
       getWikipediaDetails(tzAbbr);
     }
   }, [tzAbbr]);
@@ -18,21 +20,12 @@ const WikipediaDetails = ({ timezone }) => {
 
   const getTimezoneAbbrevation = (timezone) => {
     const today = new Date();
-    const short = today.toLocaleDateString("en-US");
     const long = today.toLocaleDateString("en-US", {
       timeZone: timezone,
       timeZoneName: "long",
     });
-    const shortIndex = long.indexOf(short);
-    if (shortIndex >= 0) {
-      const trimmed =
-        long.substring(0, shortIndex) +
-        long.substring(shortIndex + short.length);
 
-      return trimmed.replace(/^[\s,.\-:;]+|[\s,.\-:;]+$/g, "");
-    } else {
-      return long;
-    }
+    return long.replace(/[^a-zA-Z ]/g, "").trim();
   };
 
   const getWikipediaDetails = async (timeZoneAbbr) => {
@@ -45,6 +38,7 @@ const WikipediaDetails = ({ timezone }) => {
     for (const page of Object.entries(data.query.pages)) {
       const data = page[0] !== "-1" ? page[1].extract : "";
       setDetails(data);
+      setLoading(false);
       break;
     }
   };
@@ -67,7 +61,9 @@ const WikipediaDetails = ({ timezone }) => {
         )}
       </div>
       <div className="content">
-        {details ? (
+        {loading ? (
+          <div className="ui active inline loader"></div>
+        ) : details ? (
           <div dangerouslySetInnerHTML={{ __html: details }}></div>
         ) : (
           <div>Wikipedia details does not exist.</div>

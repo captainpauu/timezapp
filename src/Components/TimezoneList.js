@@ -9,9 +9,14 @@ const TimezoneList = (props) => {
 
   useEffect(() => {
     if (props.continent) {
-      const timezonesByContinent = moment.tz.names().filter((timezone) => {
-        return timezone.startsWith(props.continent);
-      });
+      const timezonesByContinent = moment.tz
+        .names()
+        .filter((timezone) => {
+          return timezone.startsWith(props.continent);
+        })
+        .map((timezone) => {
+          return timezone.replace(`${props.continent}/`, "");
+        });
 
       setTimezones(timezonesByContinent);
     }
@@ -22,7 +27,10 @@ const TimezoneList = (props) => {
       <Dropdown
         label="Select Timezone"
         options={timezones}
-        selectedOption={props.selectedTimezone}
+        selectedOption={props.selectedTimezone.replace(
+          `${props.continent}/`,
+          ""
+        )}
         onOptionSelect={props.onTimezoneSelect}
       />
     </React.Fragment>

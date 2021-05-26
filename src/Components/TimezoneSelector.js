@@ -16,7 +16,9 @@ const TimezoneSelector = (props) => {
           <TimezoneList
             continent={continent}
             selectedTimezone={props.timezone}
-            onTimezoneSelect={props.onTimezoneSelect}
+            onTimezoneSelect={(t) =>
+              props.onTimezoneSelect(`${continent}/${t}`)
+            }
           />
         </div>
       </div>

@@ -1,28 +1,28 @@
 import React from "react";
-import Dropdown from "./Shared/Dropdown";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-const continents = [
-  "Africa",
-  "America",
-  "Asia",
-  "Atlantic",
-  "Australia",
-  "Europe",
-  "Indian",
-  "Pacific",
-];
+import Dropdown from "./Shared/Dropdown";
+import { setContinent } from "./../Actions";
 
 const ContinentList = (props) => {
-  return (
-    <React.Fragment>
-      <Dropdown
-        label="Select Continent"
-        options={continents}
-        selectedOption={props.selectedContinent}
-        onOptionSelect={props.onContinentSelect}
-      />
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <Dropdown
+                label="Select Continent"
+                options={props.continentList}
+                selectedOption={props.continent}
+                onOptionSelect={props.setContinent}
+            />
+        </React.Fragment>
+    );
 };
 
-export default ContinentList;
+export default connect(
+    ({ continent, continentList }) => {
+        return { continent, continentList };
+    },
+    (dispatch) => {
+        return bindActionCreators({ setContinent }, dispatch);
+    }
+)(ContinentList);

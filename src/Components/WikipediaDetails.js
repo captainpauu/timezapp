@@ -12,9 +12,22 @@ const WikipediaDetails = (props) => {
     useEffect(() => {
         if (timeZoneAbbr) {
             setIsLoading(true);
+            const getWikipediaDetails = async (timeZoneAbbr) => {
+                const { data } = await WikipediaAPI.get("/api.php", {
+                    params: {
+                        titles: timeZoneAbbr,
+                    },
+                });
+
+                for (const page of Object.entries(data.query.pages)) {
+                    const data = page[0] !== "-1" ? page[1].extract : "";
+                    setTimeZoneDetails(data);
+                    break;
+                }
+            };
             getWikipediaDetails(timeZoneAbbr);
         }
-    }, [timeZoneAbbr, setIsLoading]);
+    }, [timeZoneAbbr, setIsLoading, setTimeZoneDetails]);
 
     useEffect(() => {
         const timezoneAbbrevation = getTimezoneAbbrevation(timeZone);
@@ -30,21 +43,6 @@ const WikipediaDetails = (props) => {
         });
 
         return long.replace(/[^a-zA-Z ]/g, "").trim();
-    };
-
-    // Fetch wikipedia details for timezone abbrevation
-    const getWikipediaDetails = async (timeZoneAbbr) => {
-        const { data } = await WikipediaAPI.get("/api.php", {
-            params: {
-                titles: timeZoneAbbr,
-            },
-        });
-
-        for (const page of Object.entries(data.query.pages)) {
-            const data = page[0] !== "-1" ? page[1].extract : "";
-            setTimeZoneDetails(data);
-            break;
-        }
     };
 
     // URL for wikipedia page
